@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Next Word Prediction</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <main class="container">
+    <header class="header">
+      <h1>Next Word Prediction</h1>
+      <p class="sub">Type a prefix and get the next-word suggestion from your model.</p>
+    </header>
+
+    <section class="card">
+      <label class="label" for="textInput">Your text</label>
+      <textarea id="textInput" class="textarea" rows="4" placeholder="e.g. deep learning is"></textarea>
+
+      <div class="row">
+        <div class="field">
+          <label class="label" for="apiBase">API base URL</label>
+          <input id="apiBase" class="input" type="text" value="/api" />
+        </div>
+
+        <div class="field small">
+          <label class="label" for="kInput">Top K</label>
+          <input id="kInput" class="input" type="number" min="1" max="20" value="5" />
+        </div>
+      </div>
+
+      <div class="actions">
+        <button id="predictBtn" class="btn">Predict</button>
+        <button id="clearBtn" class="btn secondary">Clear</button>
+      </div>
+
+      <div id="status" class="status" aria-live="polite"></div>
+
+      <div class="result">
+        <div class="result-title">Suggestion</div>
+        <div id="nextWord" class="chip">—</div>
+      </div>
+
+      <div class="result">
+        <div class="result-title">Top suggestions</div>
+        <div id="suggestions" class="chips"></div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <span>Tip: keep the API running, then open this file in your browser.</span>
+    </footer>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+
+</html>

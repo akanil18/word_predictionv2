@@ -1,0 +1,29 @@
+version: "3.9"
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: dockerfile
+    container_name: nextword-api
+    ports:
+      - "8000:8000"
+    # Model artifacts are already inside the image via COPY, but this bind mount
+    # makes it easy to swap models without rebuilding.
+    volumes:
+      - ./model:/app/model:ro
+    environment:
+      # Optional; if you know the training max_len, set it here.
+      # MAX_LEN: "<number>"
+      TF_CPP_MIN_LOG_LEVEL: "2"
+
+  frontend:
+    image: nginx:1.27-alpine
+    container_name: nextword-frontend
+    depends_on:
+      - api
+    ports:
+      - "8080:80"
+    volumes:
+      - ./frontend:/usr/share/nginx/html:ro
+      - ./frontend/nginx.conf:/etc/nginx/conf.d/default.conf:ro
