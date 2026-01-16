@@ -1,15 +1,23 @@
 async function postJson(url, body) {
-  const res = await fetch(url, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(body),
-  });
+  try {
+    const res = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+      mode: "cors", // Explicitly enable CORS
+    });
 
-  if (!res.ok) {
-    const text = await res.text();
-    throw new Error(`HTTP ${res.status}: ${text}`);
+    if (!res.ok) {
+      const text = await res.text();
+      throw new Error(`HTTP ${res.status}: ${text}`);
+    }
+    return await res.json();
+  } catch (error) {
+    if (error.name === "TypeError" && error.message === "Failed to fetch") {
+      throw new Error("Cannot connect to backend. Is it running at " + url + "? Check Console for CORS errors.");
+    }
+    throw error;
   }
-  return await res.json();
 }
 
 function setStatus(msg, isError = false) {

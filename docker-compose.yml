@@ -8,13 +8,10 @@ services:
     container_name: nextword-api
     ports:
       - "8000:8000"
-    # Model artifacts are already inside the image via COPY, but this bind mount
-    # makes it easy to swap models without rebuilding.
+    # Mount local code to reload on changes (optional, good for dev)
     volumes:
       - ./model:/app/model:ro
     environment:
-      # Optional; if you know the training max_len, set it here.
-      # MAX_LEN: "<number>"
       TF_CPP_MIN_LOG_LEVEL: "2"
 
   frontend:
@@ -27,3 +24,4 @@ services:
     volumes:
       - ./frontend:/usr/share/nginx/html:ro
       - ./frontend/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+

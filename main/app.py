@@ -129,6 +129,11 @@ def health():
     return {"status": "ok"}
 
 
+@app.get("/")
+def read_root():
+    return {"message": "Next Word Prediction API is running. Visit /docs for Swagger UI."}
+
+
 @app.post("/predict", response_model=PredictResponse)
 def predict(req: PredictRequest):
     print(f"Received prediction request: text='{req.text}', k={req.k}")
